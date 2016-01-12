@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   all.h                                              :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmarinh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/11 16:47:12 by frmarinh          #+#    #+#             */
-/*   Updated: 2016/01/12 19:11:38 by frmarinh         ###   ########.fr       */
+/*   Created: 2016/01/12 19:04:39 by frmarinh          #+#    #+#             */
+/*   Updated: 2016/01/12 20:41:42 by frmarinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ALL_H
-# define ALL_H
-# include "libft.h"
-# include <unistd.h>
-# include <dirent.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <pwd.h>
-# include <uuid/uuid.h>
-# include <grp.h>
-# include <sys/xattr.h>
-# include <time.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/ioctl.h>
-# include <fcntl.h>
-# include <stdio.h>
-void		print_error(char *name);
-#endif
+#include "all.h"
+
+void	print_error(char *name)
+{
+	ft_putstr("ls: ");
+	perror(name);
+}
