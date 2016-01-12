@@ -6,7 +6,7 @@
 /*   By: frmarinh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 16:47:12 by frmarinh          #+#    #+#             */
-/*   Updated: 2016/01/12 19:11:38 by frmarinh         ###   ########.fr       */
+/*   Updated: 2016/01/12 23:23:36 by frmarinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@
 # include <fcntl.h>
 # include <stdio.h>
 void		print_error(char *name);
+char		*add_flags(char *current_flags, char *flag_toadd);
 #endif

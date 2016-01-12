@@ -6,13 +6,13 @@
 #    By: frmarinh <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/17 08:34:59 by frmarinh          #+#    #+#              #
-#    Updated: 2016/01/12 19:11:57 by frmarinh         ###   ########.fr        #
+#    Updated: 2016/01/12 23:22:51 by frmarinh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 
-SRCS_NAME = main.c print_error.c
+SRCS_NAME = main.c print_error.c add_flags.c
 
 LIB_FOLDER = libft/
 

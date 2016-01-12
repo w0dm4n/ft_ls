@@ -6,7 +6,7 @@
 /*   By: frmarinh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 16:45:57 by frmarinh          #+#    #+#             */
-/*   Updated: 2016/01/12 19:11:17 by frmarinh         ###   ########.fr       */
+/*   Updated: 2016/01/12 23:22:38 by frmarinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int		main(int argc, char **argv)
 {
-	int i;
-	int fd;
+	int		i;
+	int		fd;
+	char	*all_flags;
 
 	i = 1;
 	if (argc != 1)
@@ -23,9 +24,7 @@ int		main(int argc, char **argv)
 		while (argv[i])
 		{
 			if (argv[i][0] == '-')
-			{
-
-			}
+				all_flags = add_flags(all_flags, argv[i]);
 			else
 			{
 				fd = 0;
@@ -37,6 +36,6 @@ int		main(int argc, char **argv)
 		}
 	}
 	//else
-		//only list dir
+		//get_current_dir
 	return (0);
 }
