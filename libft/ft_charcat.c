@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   ft_charcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmarinh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/12 19:04:39 by frmarinh          #+#    #+#             */
-/*   Updated: 2016/01/12 20:41:42 by frmarinh         ###   ########.fr       */
+/*   Created: 2016/01/14 01:20:37 by frmarinh          #+#    #+#             */
+/*   Updated: 2016/01/14 01:23:43 by frmarinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "all.h"
+#include "libft.h"
 
-void	print_error(char *name)
+char	*ft_charcat(char *str, char toadd)
 {
-	ft_putstr("ft_ls: ");
-	perror(name);
-}
+	int		i;
+	char	*new;
 
-void	print_error_usage(char invalid_flag)
-{
-	ft_putstr("ft_ls: illegal option -- ");
-	ft_putchar(invalid_flag);
-	ft_putstr("\n");
-	ft_putstr("usage: ft_ls [-lRart] [file ...]\n");
+	i = 0;
+	if (!(new = malloc(sizeof(char) * (ft_strlen(str) + 2))))
+		return (NULL);
+	while (str[i])
+	{
+		new[i] = str[i];
+		i++;
+	}
+	new[i] = toadd;
+	new[i + 1] = '\0';
+	return (new);
 }

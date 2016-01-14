@@ -27,6 +27,9 @@
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include <stdio.h>
+# define MAX_FILES_PER_FOLDER 4096
 void		print_error(char *name);
 char		*add_flags(char *current_flags, char *flag_toadd);
+void		get_current_dir(void);
+void		print_error_usage(char invalid_flag);
 #endif
