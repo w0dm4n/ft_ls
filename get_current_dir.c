@@ -12,34 +12,77 @@
 
 #include "all.h"
 
-char	**range_byascii(char **files)
+char	**get_files_in_order(char **files, char **tmp, int i_maj)
 {
-	int 	i;
-	char	*tmp;
+	int		i;
 
 	i = 0;
 	while (files[i])
 	{
-		if (files[i] && files[i + 1])
+		if (files[i][0] >= 'A' && files[i][0] <= 'Z')
 		{
-			while (files[i][0] < files[i + 1][0])
-			{
-				tmp = files[i];
-				files[i] = files[i + 1];
-				files[i + 1] = tmp;
-			}
+			tmp[i_maj] = files[i];
+			i_maj++;
 		}
 		i++;
 	}
-	return (files);
+	i = 0;
+	while (files[i])
+	{
+		if (files[i][0] >= 'a' && files[i][0] <= 'z')
+		{
+			tmp[i_maj] = files[i];
+			i_maj++;
+		}
+		i++;
+	}
+	return (tmp);
+}
+
+char	**range_byascii(char **files)
+{
+	char	**tmp;
+	int		i;
+	int		i_maj;
+
+	i = 0;
+	i_maj = 0;
+	if (!(tmp = malloc(sizeof(char*) * MAX_FILES_PER_FOLDER)))
+		return (NULL);
+	while (files[i])
+	{
+		if (!(files[i][0] >= 'A' && files[i][0] <= 'Z')
+			&& !(files[i][0] >= 'a' && files[i][0] <= 'z'))
+		{
+			tmp[i_maj] = files[i];
+			i_maj++;
+		}
+		i++;
+	}
+	tmp = get_files_in_order(files, tmp, i_maj);
+	free(files);
+	return (tmp);
+}
+
+void	print_current_dir(char **files)
+{
+	int		i;
+
+	i = 0;
+	while (files[i])
+	{
+		ft_putstr(files[i]);
+		ft_putstr("\n");
+		i++;
+	}
 }
 
 void	get_current_dir(void)
 {
 	DIR				*current_dir;
 	struct dirent	*files_info;
-	int				i;
 	char			**files;
+	int				i;
 
 	i = 0;
 	current_dir = opendir(".");
@@ -57,13 +100,7 @@ void	get_current_dir(void)
 		}
 	}
 	closedir(current_dir);
-	i = 0;
 	files = range_byascii(files);
-	while (files[i])
-	{
-		ft_putstr(files[i]);
-		ft_putstr("\n");
-		i++;
-	}
+	print_current_dir(files);
 	free(files);
 }

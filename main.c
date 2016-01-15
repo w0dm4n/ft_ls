@@ -18,6 +18,7 @@ int		main(int argc, char **argv)
 	int		fd;
 	char	*all_flags;
 	int		boolean;
+	//char	**all_dir_files;
 
 	i = 1;
 	boolean = 0;
@@ -37,11 +38,12 @@ int		main(int argc, char **argv)
 				fd = open(argv[i], O_RDONLY);
 				if (fd == -1)
 					print_error(argv[i]);
-				boolean++;
+				else
+					boolean++;
 			}
 			i++;
 		}
-		ft_putstr(all_flags);
+		print_dir(all_flags, argv, boolean);
 	}
 	else
 		get_current_dir();

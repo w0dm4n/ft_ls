@@ -12,7 +12,7 @@
 
 NAME = ft_ls
 
-SRCS_NAME = main.c print_error.c add_flags.c get_current_dir.c
+SRCS_NAME = main.c print_error.c add_flags.c get_current_dir.c print_dir.c get_specified_dir.c utils.c
 
 LIB_FOLDER = libft/
 
