@@ -18,9 +18,11 @@ int		main(int argc, char **argv)
 	int		fd;
 	char	*all_flags;
 	int		boolean;
-	//char	**all_dir_files;
+	int		*all_d;
+	int		case_alldir;
 
 	i = 1;
+	case_alldir = 0;
 	boolean = 0;
 	all_flags = NULL;
 	if (argc != 1)
@@ -39,11 +41,22 @@ int		main(int argc, char **argv)
 				if (fd == -1)
 					print_error(argv[i]);
 				else
-					boolean++;
+				{
+					if (!boolean)
+						if (!(all_d = initialise_array(all_d)))
+							return (-1);
+					all_d[case_alldir] = i;
+					case_alldir++;
+				}
+				boolean++;
+				close(fd);
 			}
 			i++;
 		}
-		print_dir(all_flags, argv, boolean);
+		if (!boolean)
+			print_dir(all_flags);
+		else
+			print_file_or_dir(all_flags, argv, all_d);
 	}
 	else
 		get_current_dir();

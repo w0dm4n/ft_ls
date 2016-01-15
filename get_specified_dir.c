@@ -43,6 +43,30 @@ char	**read_without_hidden_files(char **files, DIR *current_dir)
 	return (files);
 }
 
+char	**reverse_array(char **files)
+{
+	char	**new;
+	int		i;
+	int		i_new;
+
+	i = 0;
+	i_new = 0;
+	if (!(new = malloc(sizeof(char*) * MAX_FILES_PER_FOLDER)))
+		return (NULL);
+	new = ft_set_null(new);
+	while (files[i])
+		i++;
+	i--;
+	while (i != -1)
+	{
+		new[i_new] = files[i];
+		i_new++;
+		i--;
+	}
+	free(files);
+	return (new);
+}
+
 char	**get_specified_dir(char *dir, char *all_flags)
 {
 	char			**files;
@@ -59,6 +83,9 @@ char	**get_specified_dir(char *dir, char *all_flags)
 	else
 		files = read_without_hidden_files(files, current_dir);
 	files = range_byascii(files);
+	// if flags t <=> order by file date modification files = ..
+	if (ft_strchr(all_flags, 'r'))
+		files = reverse_array(files);
 	closedir(current_dir);
 	return (files);
 }

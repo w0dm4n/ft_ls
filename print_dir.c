@@ -14,31 +14,20 @@
 
 void		print_all_l_flag(char **files, char *flags)
 {
-	int			i;
+	int				i;
 	struct stat		*file_stat;
-	//struct passwd	*pw;
 
-	flags = NULL;
 	i = 0;
+	file_stat = NULL;
+	ft_putstr("total ");
+	ft_putnbr(get_total_blocks(files, file_stat));
+	ft_putstr("\n");
 	while (files[i])
 	{
 		if (!(file_stat = get_file_stat(files[i], file_stat)))
 			return ;
-		ft_putstr(get_permissions(file_stat));
-		ft_putstr("  ");
-		ft_putnbr(file_stat->st_nlink);
-		ft_putstr(" ");
-		ft_putstr(get_user(file_stat));
-		ft_putstr(" ");
-		ft_putstr(get_group(file_stat));
-		ft_putstr("   ");
-		ft_putnbr(file_stat->st_size);
-		ft_putstr(" ");
-		ft_putnbr(file_stat->st_mtime);
-		//ft_putstr("Jan 15 01:33");
-		ft_putstr(" ");
-		ft_putstr(files[i]);
-		ft_putstr("\n");
+		print_line(file_stat, flags, files, i);
+		free(file_stat);
 		i++;
 	}
 }
@@ -50,21 +39,45 @@ void		print_current_dir_with_flags(char **files, char *flags)
 	free(files);
 }
 
-void		print_dir(char *all_flags, char **argv, int folder_nbr)
+void		print_dir(char *all_flags)
 {
-	int i;
+	print_current_dir_with_flags(get_specified_dir(".", all_flags), all_flags);
+}
 
-	i = 1;
-	if (!folder_nbr)
-		print_current_dir_with_flags(get_specified_dir(".", all_flags), all_flags);
-	else
+void		print_file_or_dir(char *flags, char **av, int *pos)
+{
+	int		i;
+	int		i_2;
+	char	**file_n_folder;
+	//char	**files;
+
+	i = 0;
+	i_2 = 0;
+	if (!flags || flags == NULL)
+		if(!(flags = (char*)malloc(sizeof(char))))
+			return ;
+	if (!(file_n_folder = malloc(sizeof(char*) * ALL_DIR_AND_FILES)))
+		return ;
+	file_n_folder = ft_set_null(file_n_folder);
+	while (pos[i])
 	{
-		while (i <= folder_nbr)
+		file_n_folder[i] = av[pos[i]];
+		i++;
+	}
+	// range them by ascii order [file_n_folder]
+
+	i = 0;
+	while (file_n_folder[i])
+	{
+		//ft_putstr(file_n_folder[i]);
+		print_current_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags);
+		// get_file_stat DOESNT LOOK IN THE GOOD FOLDER
+		/*while (files[i_2])
 		{
-			//if one file/dir(on argv) is invalid that's all fucked
-			//print_dir_or_files_with_flags(get_dir_or_files(argv[i]), all_flags);
-			ft_putstr(argv[i]);
-			i++;
+			ft_putstr(files[i_2]);
+			i_2++;
 		}
+		free(files);*/
+		i++;
 	}
 }
