@@ -12,6 +12,36 @@
 
 #include "all.h"
 
+char		**range_byfilenfolder(char **file_n_folder)
+{
+	return (file_n_folder);
+}
+
+int			check_l_or_1(char *flags)
+{
+	int i;
+	int l_pos;
+	int one_pos;
+
+	i = 0;
+	l_pos = 0;
+	one_pos = 0;
+	while (flags[i])
+	{
+		if (flags[i] == 'l')
+			l_pos = i;
+		if (flags[i] == '1')
+			one_pos = i;
+		i++;
+	}
+	if (ft_strchr(flags, '1') && !ft_strchr(flags, 'l'))
+		return (1);
+	if (l_pos < one_pos)
+		return (1);
+	else
+		return (0);
+}
+
 int			*initialise_array(int *array)
 {
 	int i;
@@ -36,7 +66,7 @@ size_t		get_total_blocks(char **files, struct stat *file_stat)
 	size = 0;
 	while (files[i])
 	{
-		if (!(file_stat = get_file_stat(files[i], file_stat)))
+		if (!(file_stat = get_file_stat(files[i], file_stat, ".")))
 			return (-1);
 		size = size + file_stat->st_blocks;
 		free(file_stat);

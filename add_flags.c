@@ -15,7 +15,7 @@
 int		check_ifvalid(char flag)
 {
 	if (flag == 'l' || flag == 'R' || flag == 'a'
-		|| flag == 'r' || flag == 't')
+		|| flag == 'r' || flag == 't' || flag == '1' || flag == '-')
 		return (1);
 	return (0);
 }

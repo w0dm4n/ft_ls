@@ -20,6 +20,8 @@ char	**read_with_hidden_files(char **files, DIR *current_dir)
 	i = 0;
 	while ((files_info = readdir(current_dir)) != NULL)
 	{
+		//if (!ft_strcmp(files_info->d_name, '-'))
+		//ft_putstr(files_info->d_name);
 		files[i] = files_info->d_name;
 		i++;
 	}

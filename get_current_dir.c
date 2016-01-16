@@ -77,7 +77,14 @@ void	print_current_dir(char **files)
 	}
 }
 
-void	get_current_dir(void)
+char	**modify_if_flags(char *flags, char **files)
+{
+	flags = NULL;
+	// ADD MODIFICATIONS !
+	return (files);
+}
+
+void	get_current_dir(char *flags)
 {
 	DIR				*current_dir;
 	struct dirent	*files_info;
@@ -101,6 +108,7 @@ void	get_current_dir(void)
 	}
 	closedir(current_dir);
 	files = range_byascii(files);
+	files = modify_if_flags(flags, files);
 	print_current_dir(files);
 	free(files);
 }

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "all.h"
+#include <stdio.h>
 
 int		main(int argc, char **argv)
 {
@@ -29,7 +30,7 @@ int		main(int argc, char **argv)
 	{
 		while (argv[i])
 		{
-			if (argv[i][0] == '-' && !boolean)
+			if (argv[i][0] == '-' && !boolean && argv[i][1])
 			{
 				if (!(all_flags = add_flags(all_flags, argv[i])))
 					return (-1);
@@ -42,7 +43,7 @@ int		main(int argc, char **argv)
 					print_error(argv[i]);
 				else
 				{
-					if (!boolean)
+					if (!case_alldir)
 						if (!(all_d = initialise_array(all_d)))
 							return (-1);
 					all_d[case_alldir] = i;
@@ -59,6 +60,6 @@ int		main(int argc, char **argv)
 			print_file_or_dir(all_flags, argv, all_d);
 	}
 	else
-		get_current_dir();
+		get_current_dir(all_flags);
 	return (0);
 }

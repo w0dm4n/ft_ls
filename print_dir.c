@@ -24,7 +24,7 @@ void		print_all_l_flag(char **files, char *flags)
 	ft_putstr("\n");
 	while (files[i])
 	{
-		if (!(file_stat = get_file_stat(files[i], file_stat)))
+		if (!(file_stat = get_file_stat(files[i], file_stat, ".")))
 			return ;
 		print_line(file_stat, flags, files, i);
 		free(file_stat);
@@ -34,8 +34,21 @@ void		print_all_l_flag(char **files, char *flags)
 
 void		print_current_dir_with_flags(char **files, char *flags)
 {
-	if (ft_strchr(flags, 'l'))
-		print_all_l_flag(files, flags);
+	if (ft_strchr(flags, '1'))
+	{
+		if (check_l_or_1(flags))
+			get_current_dir(flags);
+		else
+		{
+			if (ft_strchr(flags, 'l'))
+				print_all_l_flag(files, flags);
+		}
+	}
+	else
+	{
+		if (ft_strchr(flags, 'l'))
+			print_all_l_flag(files, flags);
+	}
 	free(files);
 }
 
@@ -46,13 +59,16 @@ void		print_dir(char *all_flags)
 
 void		print_file_or_dir(char *flags, char **av, int *pos)
 {
-	int		i;
-	int		i_2;
-	char	**file_n_folder;
+	int				i;
+	int				i_2;
+	char			**file_n_folder;
 	//char	**files;
+	struct stat		*file_stat;
 
 	i = 0;
 	i_2 = 0;
+	if (!pos)
+		return ;
 	if (!flags || flags == NULL)
 		if(!(flags = (char*)malloc(sizeof(char))))
 			return ;
@@ -67,10 +83,23 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 	// range them by ascii order [file_n_folder]
 
 	i = 0;
+	file_n_folder = range_byfilenfolder(file_n_folder);
 	while (file_n_folder[i])
 	{
-		//ft_putstr(file_n_folder[i]);
-		print_current_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags);
+		if (!(file_stat = get_file_stat(file_n_folder[i], file_stat, ".")))
+			return ;
+		if (S_ISDIR(file_stat->st_mode))
+		{
+			ft_putstr("folder");
+		}
+		else
+			ft_putstr("file");
+		ft_putstr("\n");
+		/*ft_putstr(file_n_folder[i]);
+		ft_putstr(":\n");
+		if (file_n_folder[i][0] == '-')
+			ft_putstr("\n");*/
+		//print_current_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags);
 		// get_file_stat DOESNT LOOK IN THE GOOD FOLDER
 		/*while (files[i_2])
 		{
@@ -78,6 +107,7 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 			i_2++;
 		}
 		free(files);*/
+		free(file_stat);
 		i++;
 	}
 }

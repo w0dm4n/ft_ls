@@ -32,15 +32,18 @@ char 		*get_user(struct stat *file_stat)
 	return (tmp->pw_name);
 }
 
-struct stat	*get_file_stat(char *name, struct stat *file_stat)
+struct stat	*get_file_stat(char *name, struct stat *file_stat, char *folder)
 {
 	struct stat *tmp;
 
 	file_stat = NULL;
 	if (!(tmp = (struct stat*)malloc(sizeof(struct stat))))
 		return (NULL);
-	if (stat(name, tmp) < 0)
-		return (NULL);
+	if (!ft_strcmp(folder, "."))
+	{
+		if (stat(name, tmp) < 0)
+			return (NULL);
+	}
 	return (tmp);
 }
 
