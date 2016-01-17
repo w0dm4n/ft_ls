@@ -61,5 +61,5 @@ void		print_asked_dir_with_flags(char **files, char *flags, char *folder)
 				get_current_dir(flags, folder);
 		}
 	}
-	free(files);
+	free_files(files);
 }

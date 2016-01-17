@@ -71,7 +71,7 @@ void		print_current_dir_with_flags(char **files, char *flags)
 		else
 			get_current_dir(flags, ".");			
 	}
-	free(files);
+	free_files(files);
 }
 
 void		print_dir(char *all_flags)

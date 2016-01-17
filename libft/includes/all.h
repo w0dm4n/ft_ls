@@ -55,4 +55,5 @@ void			just_print_files(char **files);
 char			**reverse_array(char **files);
 char			**read_without_hidden_files(char **files, DIR *current_dir);
 char			**read_with_hidden_files(char **files, DIR *current_dir);
+void			free_files(char **files);
 #endif

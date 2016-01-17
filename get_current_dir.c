@@ -108,5 +108,5 @@ void	get_current_dir(char *flags, char *folder)
 	files = range_byascii(files);
 	files = modify_if_flags(flags, files);
 	print_current_dir(files);
-	free(files);
+	free_files(files);
 }

@@ -67,3 +67,16 @@ void		just_print_files(char **files)
 		i++;
 	}
 }
+
+void		free_files(char **files)
+{
+	int	i;
+
+	i = 0;
+	while (files[i])
+	{
+		if (files[i])
+			free(files[i]);
+		i++;
+	}
+}
