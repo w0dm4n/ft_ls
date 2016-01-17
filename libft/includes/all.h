@@ -27,12 +27,12 @@
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include <stdio.h>
-# define MAX_FILES_PER_FOLDER 4096
+# define MAX_FILES_PER_FOLDER 40960
 # define PERMISSIONS_BUFFER 12
-# define ALL_DIR_AND_FILES 4096
+# define ALL_DIR_AND_FILES 40960
 void			print_error(char *name);
 char			*add_flags(char *current_flags, char *flag_toadd);
-void			get_current_dir(char *flags);
+void			get_current_dir(char *flags, char *folder);
 void			print_error_usage(char invalid_flag);
 void			print_dir(char *all_flags);
 void			print_file_or_dir(char *flags, char **av, int *pos);
@@ -52,4 +52,7 @@ char			**set_dir_on_array(char **tmp, char **old, int index);
 int				get_file_nbr(char **file_n_folder);
 void			print_asked_dir_with_flags(char **files, char *flags, char *folder);
 void			just_print_files(char **files);
+char			**reverse_array(char **files);
+char			**read_without_hidden_files(char **files, DIR *current_dir);
+char			**read_with_hidden_files(char **files, DIR *current_dir);
 #endif

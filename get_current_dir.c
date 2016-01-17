@@ -79,33 +79,31 @@ void	print_current_dir(char **files)
 
 char	**modify_if_flags(char *flags, char **files)
 {
-	flags = NULL;
-	// ADD MODIFICATIONS !
+	if (ft_strchr(flags, 'r'))
+		files = reverse_array(files);
 	return (files);
 }
 
-void	get_current_dir(char *flags)
+void	get_current_dir(char *flags, char *folder)
 {
 	DIR				*current_dir;
-	struct dirent	*files_info;
 	char			**files;
 	int				i;
 
 	i = 0;
-	current_dir = opendir(".");
+	if (!flags)
+		if (!(flags = ft_strnew(1)))
+			return ;
+	current_dir = opendir(folder);
 	if (current_dir == NULL)
-		print_error(".");
+		print_error(folder);
 	if (!(files = malloc(sizeof(char*) * MAX_FILES_PER_FOLDER)))
 		return ;
 	files = ft_set_null(files);
-	while ((files_info = readdir(current_dir)) != NULL)
-	{
-		if (files_info->d_name[0] != '.')
-		{
-			files[i] = ft_strdup(files_info->d_name);
-			i++;
-		}
-	}
+	if (ft_strchr(flags, 'a'))
+		files = read_with_hidden_files(files, current_dir);
+	else
+		files = read_without_hidden_files(files, current_dir);
 	closedir(current_dir);
 	files = range_byascii(files);
 	files = modify_if_flags(flags, files);

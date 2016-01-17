@@ -59,6 +59,7 @@ void		just_print_files(char **files)
 	int		i;
 
 	i = 0;
+	// SEGV WITH ./ft_ls test dir
 	while (files[i])
 	{
 		ft_putstr(files[i]);

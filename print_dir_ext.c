@@ -16,12 +16,17 @@ void		print_all_flag(char **files, char *flags, char *folder)
 {
 	int				i;
 	struct stat		*file_stat;
+	int				blocks_size;
 
 	i = 0;
 	file_stat = NULL;
-	ft_putstr("total ");
-	ft_putnbr(get_total_blocks(files, file_stat, folder));
-	ft_putstr("\n");
+	blocks_size = get_total_blocks(files, file_stat, folder);
+	if (blocks_size > 0)
+	{
+		ft_putstr("total ");
+		ft_putnbr(blocks_size);
+		ft_putstr("\n");
+	}
 	while (files[i])
 	{
 		if (!(file_stat = get_file_stat(files[i], file_stat, folder)))
@@ -41,7 +46,7 @@ void		print_asked_dir_with_flags(char **files, char *flags, char *folder)
 		if (ft_strchr(flags, '1'))
 		{
 			if (check_l_or_1(flags))
-				get_current_dir(flags);
+				get_current_dir(flags, folder);
 			else
 			{
 				if (ft_strchr(flags, 'l'))
@@ -52,6 +57,8 @@ void		print_asked_dir_with_flags(char **files, char *flags, char *folder)
 		{
 			if (ft_strchr(flags, 'l'))
 				print_all_flag(files, flags, folder);
+			else
+				get_current_dir(flags, folder);
 		}
 	}
 	free(files);

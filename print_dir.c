@@ -31,12 +31,17 @@ void		print_all_l_flag(char **files, char *flags)
 {
 	int				i;
 	struct stat		*file_stat;
+	int				blocks_size;
 
 	i = 0;
 	file_stat = NULL;
-	ft_putstr("total ");
-	ft_putnbr(get_total_blocks(files, file_stat, "."));
-	ft_putstr("\n");
+	blocks_size = get_total_blocks(files, file_stat, ".");
+	if (blocks_size > 0)
+	{
+		ft_putstr("total ");
+		ft_putnbr(blocks_size);
+		ft_putstr("\n");
+	}
 	while (files[i])
 	{
 		if (!(file_stat = get_file_stat(files[i], file_stat, ".")))
@@ -52,7 +57,7 @@ void		print_current_dir_with_flags(char **files, char *flags)
 	if (ft_strchr(flags, '1'))
 	{
 		if (check_l_or_1(flags))
-			get_current_dir(flags);
+			get_current_dir(flags, ".");
 		else
 		{
 			if (ft_strchr(flags, 'l'))
@@ -63,6 +68,8 @@ void		print_current_dir_with_flags(char **files, char *flags)
 	{
 		if (ft_strchr(flags, 'l'))
 			print_all_l_flag(files, flags);
+		else
+			get_current_dir(flags, ".");			
 	}
 	free(files);
 }
@@ -78,6 +85,7 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 	int				i_2;
 	char			**file_n_folder;
 	int				file_nbr;
+	int				array_len;
 	//char	**files;
 	//struct stat		*file_stat;
 
@@ -111,8 +119,19 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 		}
 		else
 		{
+			if (!array_len)
+			{
+				array_len = ft_lenarray((void**)file_n_folder);
+				array_len = array_len - i;
+			}
+			if (array_len > 1)
+			{
+				ft_putstr(file_n_folder[i]);
+				ft_putstr(":\n");
+			}
 			print_asked_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags, file_n_folder[i]);
-			ft_putstr("\n\n");
+			if (array_len > 1 && file_n_folder[i + 1])
+				ft_putstr("\n");
 		}
 		i++;
 	}

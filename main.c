@@ -59,6 +59,6 @@ int		main(int argc, char **argv)
 			print_file_or_dir(all_flags, argv, all_d);
 	}
 	else
-		get_current_dir(all_flags);
+		get_current_dir(all_flags, ".");
 	return (0);
 }
