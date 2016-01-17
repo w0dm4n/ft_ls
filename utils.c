@@ -38,7 +38,7 @@ struct stat	*get_file_stat(char *name, struct stat *file_stat, char *folder)
 	char		*full_path;
 	size_t		size;
 
-	size = 1024;
+	size = (ft_strlen(folder + 1) + ft_strlen(name + 1) + 20);
 	file_stat = NULL;
 	if (!(tmp = (struct stat*)malloc(sizeof(struct stat))))
 		return (NULL);
