@@ -102,7 +102,7 @@ void	get_current_dir(char *flags)
 	{
 		if (files_info->d_name[0] != '.')
 		{
-			files[i] = files_info->d_name;
+			files[i] = ft_strdup(files_info->d_name);
 			i++;
 		}
 	}

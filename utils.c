@@ -35,7 +35,10 @@ char 		*get_user(struct stat *file_stat)
 struct stat	*get_file_stat(char *name, struct stat *file_stat, char *folder)
 {
 	struct stat *tmp;
+	char		*full_path;
+	size_t		size;
 
+	size = (ft_strlen(folder + 1) + ft_strlen(name + 1) + 10);
 	file_stat = NULL;
 	if (!(tmp = (struct stat*)malloc(sizeof(struct stat))))
 		return (NULL);
@@ -43,6 +46,17 @@ struct stat	*get_file_stat(char *name, struct stat *file_stat, char *folder)
 	{
 		if (stat(name, tmp) < 0)
 			return (NULL);
+	}
+	else
+	{
+		if (!(full_path = malloc(sizeof(char) * size)))
+			return (NULL);
+		full_path = ft_strcat(full_path, folder);
+		full_path = ft_strcat(full_path, "/");
+		full_path = ft_strcat(full_path, name);
+		if (stat(full_path, tmp) < 0)
+			return (NULL);
+		free(full_path);
 	}
 	return (tmp);
 }

@@ -12,34 +12,9 @@
 
 #include "all.h"
 
-char	*add_in(char *str)
-{
-	char	*tmp;
-	int		i;
-	int		i_2;
-
-	i = 0;
-	i_2 = 4;
-	if (!(tmp = malloc(sizeof(char) * (ft_strlen(str) + 5))))
-		return (NULL);
-	tmp[0] = 'l';
-	tmp[1] = 's';
-	tmp[2] = ':';
-	tmp[3] = ' ';
-	while (str[i])
-	{
-		tmp[i_2] = str[i];
-		i++;
-		i_2++;
-	}
-	tmp[i_2] ='\0';
-	return (tmp); 
-}
-
 void	print_error(char *name)
 {
-	//ft_putstr("ls: ");
-	name = add_in(name);
+	ft_putstr("ft_ls: ");
 	perror(name);
 }
 

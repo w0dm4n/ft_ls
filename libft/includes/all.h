@@ -43,9 +43,13 @@ char			*get_permissions(struct stat *file_stat);
 char			*get_user(struct stat *file_stat);
 char			*get_group(struct stat *file_stat);
 char			*get_last_modification_time(struct stat *file_stat);
-size_t			get_total_blocks(char **files, struct stat *file_stat);
+size_t			get_total_blocks(char **files, struct stat *file_stat, char *folder);
 void			print_line(struct stat *file_stat, char *flags, char **f, int i);
 int				*initialise_array(int *array);
 int				check_l_or_1(char *flags);
 char			**range_byfilenfolder(char **file_n_folder);
+char			**set_dir_on_array(char **tmp, char **old, int index);
+int				get_file_nbr(char **file_n_folder);
+void			print_asked_dir_with_flags(char **files, char *flags, char *folder);
+void			just_print_files(char **files);
 #endif

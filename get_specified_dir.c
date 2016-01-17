@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "all.h"
+#include <stdio.h>
 
 char	**read_with_hidden_files(char **files, DIR *current_dir)
 {
@@ -20,11 +21,10 @@ char	**read_with_hidden_files(char **files, DIR *current_dir)
 	i = 0;
 	while ((files_info = readdir(current_dir)) != NULL)
 	{
-		//if (!ft_strcmp(files_info->d_name, '-'))
-		//ft_putstr(files_info->d_name);
-		files[i] = files_info->d_name;
+		files[i] = ft_strdup(files_info->d_name);
 		i++;
 	}
+	free(files_info);
 	return (files);
 }
 
@@ -38,10 +38,11 @@ char	**read_without_hidden_files(char **files, DIR *current_dir)
 	{
 		if (files_info->d_name[0] != '.')
 		{
-			files[i] = files_info->d_name;
+			files[i] = ft_strdup(files_info->d_name);
 			i++;
 		}
 	}
+	free(files_info);
 	return (files);
 }
 

@@ -14,7 +14,32 @@
 
 char		**range_byfilenfolder(char **file_n_folder)
 {
-	return (file_n_folder);
+	char			**tmp;
+	int				i;
+	struct stat		*file_stat;
+	int				i_new;
+
+	i = 0;
+	i_new = 0;
+	file_stat = NULL;
+	if (!(tmp = (char**)malloc(sizeof(char*) * ALL_DIR_AND_FILES)))
+		return (NULL);
+	tmp = ft_set_null(tmp);
+	while (file_n_folder[i])
+	{
+
+		if (!(file_stat = get_file_stat(file_n_folder[i], file_stat, ".")))
+			return (NULL);
+		if (!S_ISDIR(file_stat->st_mode))
+		{
+			tmp[i_new] = file_n_folder[i];
+			i_new++;
+		}
+		i++;
+		free(file_stat);
+	}
+	tmp = set_dir_on_array(tmp, file_n_folder, i_new);
+	return (tmp);
 }
 
 int			check_l_or_1(char *flags)
@@ -57,16 +82,17 @@ int			*initialise_array(int *array)
 	return (array);
 }
 
-size_t		get_total_blocks(char **files, struct stat *file_stat)
+size_t		get_total_blocks(char **files, struct stat *file_stat, char *folder)
 {
 	int		i;
 	size_t	size;
 
+	// READING 2 TIMES IS USELESS AND BAD
 	i = 0;
 	size = 0;
 	while (files[i])
 	{
-		if (!(file_stat = get_file_stat(files[i], file_stat, ".")))
+		if (!(file_stat = get_file_stat(files[i], file_stat, folder)))
 			return (-1);
 		size = size + file_stat->st_blocks;
 		free(file_stat);

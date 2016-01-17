@@ -12,6 +12,21 @@
 
 #include "all.h"
 
+void		print_file_line(char *file_name, char *flags)
+{
+	if (!flags || flags == NULL || !(ft_strlen(flags)))
+	{
+		ft_putstr(file_name);
+			ft_putstr("\n");
+	}
+	else
+	{
+		ft_putstr(file_name);
+			ft_putstr("\n");
+			//TODO
+	}
+}
+
 void		print_all_l_flag(char **files, char *flags)
 {
 	int				i;
@@ -20,7 +35,7 @@ void		print_all_l_flag(char **files, char *flags)
 	i = 0;
 	file_stat = NULL;
 	ft_putstr("total ");
-	ft_putnbr(get_total_blocks(files, file_stat));
+	ft_putnbr(get_total_blocks(files, file_stat, "."));
 	ft_putstr("\n");
 	while (files[i])
 	{
@@ -62,8 +77,9 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 	int				i;
 	int				i_2;
 	char			**file_n_folder;
+	int				file_nbr;
 	//char	**files;
-	struct stat		*file_stat;
+	//struct stat		*file_stat;
 
 	i = 0;
 	i_2 = 0;
@@ -84,30 +100,20 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 
 	i = 0;
 	file_n_folder = range_byfilenfolder(file_n_folder);
+	file_nbr = get_file_nbr(file_n_folder);
 	while (file_n_folder[i])
 	{
-		if (!(file_stat = get_file_stat(file_n_folder[i], file_stat, ".")))
-			return ;
-		if (S_ISDIR(file_stat->st_mode))
+		if (i < file_nbr)
 		{
-			ft_putstr("folder");
+			print_file_line(file_n_folder[i], flags);
+			if ((i + 1) == file_nbr && file_n_folder[i + 1])
+				ft_putstr("\n");
 		}
 		else
-			ft_putstr("file");
-		ft_putstr("\n");
-		/*ft_putstr(file_n_folder[i]);
-		ft_putstr(":\n");
-		if (file_n_folder[i][0] == '-')
-			ft_putstr("\n");*/
-		//print_current_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags);
-		// get_file_stat DOESNT LOOK IN THE GOOD FOLDER
-		/*while (files[i_2])
 		{
-			ft_putstr(files[i_2]);
-			i_2++;
+			print_asked_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags, file_n_folder[i]);
+			ft_putstr("\n\n");
 		}
-		free(files);*/
-		free(file_stat);
 		i++;
 	}
 }
