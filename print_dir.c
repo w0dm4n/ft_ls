@@ -12,21 +12,6 @@
 
 #include "all.h"
 
-void		print_file_line(char *file_name, char *flags)
-{
-	if (!flags || flags == NULL || !(ft_strlen(flags)))
-	{
-		ft_putstr(file_name);
-			ft_putstr("\n");
-	}
-	else
-	{
-		ft_putstr(file_name);
-			ft_putstr("\n");
-			//TODO
-	}
-}
-
 void		print_all_l_flag(char **files, char *flags)
 {
 	int				i;
@@ -36,7 +21,7 @@ void		print_all_l_flag(char **files, char *flags)
 	i = 0;
 	file_stat = NULL;
 	blocks_size = get_total_blocks(files, file_stat, ".");
-	if (blocks_size > 0)
+	if (blocks_size > 0 || ft_strchr(flags, 'a'))
 	{
 		ft_putstr("total ");
 		ft_putnbr(blocks_size);
@@ -76,18 +61,20 @@ void		print_current_dir_with_flags(char **files, char *flags)
 
 void		print_dir(char *all_flags)
 {
-	print_current_dir_with_flags(get_specified_dir(".", all_flags), all_flags);
+	if (ft_strchr(all_flags, 'R'))
+		print_recursive(get_specified_dir(".", all_flags), all_flags, ".");
+	else
+		print_current_dir_with_flags(get_specified_dir(".", all_flags), all_flags);
 }
 
 void		print_file_or_dir(char *flags, char **av, int *pos)
 {
 	int				i;
 	int				i_2;
+	char			**all_file;
 	char			**file_n_folder;
 	int				file_nbr;
 	int				array_len;
-	//char	**files;
-	//struct stat		*file_stat;
 
 	i = 0;
 	i_2 = 0;
@@ -107,13 +94,19 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 	// range them by ascii order [file_n_folder]
 
 	i = 0;
-	file_n_folder = range_byfilenfolder(file_n_folder);
+	array_len = 0;
+	all_file = range_byfilenfolder(file_n_folder, 0);
+	file_n_folder = range_byfilenfolder(file_n_folder, 1);
 	file_nbr = get_file_nbr(file_n_folder);
 	while (file_n_folder[i])
 	{
 		if (i < file_nbr)
 		{
-			print_file_line(file_n_folder[i], flags);
+			if (!i_2)
+			{
+				print_file_with_flags(all_file, flags);
+				i_2++;
+			}
 			if ((i + 1) == file_nbr && file_n_folder[i + 1])
 				ft_putstr("\n");
 		}
@@ -124,11 +117,12 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 				array_len = ft_lenarray((void**)file_n_folder);
 				array_len = array_len - i;
 			}
-			if (array_len > 1)
+			if (array_len > 1 || i_2)
 			{
 				ft_putstr(file_n_folder[i]);
 				ft_putstr(":\n");
 			}
+			//ADD PRINT RECURSIVE if -R
 			print_asked_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags, file_n_folder[i]);
 			if (array_len > 1 && file_n_folder[i + 1])
 				ft_putstr("\n");

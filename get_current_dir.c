@@ -21,7 +21,7 @@ char	**get_files_in_order(char **files, char **tmp, int i_maj)
 	{
 		if (files[i][0] >= 'A' && files[i][0] <= 'Z')
 		{
-			tmp[i_maj] = files[i];
+			tmp[i_maj] = ft_strdup(files[i]);
 			i_maj++;
 		}
 		i++;
@@ -31,7 +31,7 @@ char	**get_files_in_order(char **files, char **tmp, int i_maj)
 	{
 		if (files[i][0] >= 'a' && files[i][0] <= 'z')
 		{
-			tmp[i_maj] = files[i];
+			tmp[i_maj] = ft_strdup(files[i]);
 			i_maj++;
 		}
 		i++;
@@ -54,7 +54,7 @@ char	**range_byascii(char **files)
 		if (!(files[i][0] >= 'A' && files[i][0] <= 'Z')
 			&& !(files[i][0] >= 'a' && files[i][0] <= 'z'))
 		{
-			tmp[i_maj] = files[i];
+			tmp[i_maj] = ft_strdup(files[i]);
 			i_maj++;
 		}
 		i++;
@@ -81,6 +81,7 @@ char	**modify_if_flags(char *flags, char **files)
 {
 	if (ft_strchr(flags, 'r'))
 		files = reverse_array(files);
+	// if flags t <=> order by file date modification files = ..
 	return (files);
 }
 

@@ -12,7 +12,7 @@
 
 #include "all.h"
 
-char		**range_byfilenfolder(char **file_n_folder)
+char		**range_byfilenfolder(char **file_n_folder, int folder)
 {
 	char			**tmp;
 	int				i;
@@ -32,13 +32,14 @@ char		**range_byfilenfolder(char **file_n_folder)
 			return (NULL);
 		if (!S_ISDIR(file_stat->st_mode))
 		{
-			tmp[i_new] = file_n_folder[i];
+			tmp[i_new] = ft_strdup(file_n_folder[i]);
 			i_new++;
 		}
 		i++;
 		free(file_stat);
 	}
-	tmp = set_dir_on_array(tmp, file_n_folder, i_new);
+	if (folder)
+		tmp = set_dir_on_array(tmp, file_n_folder, i_new);
 	return (tmp);
 }
 

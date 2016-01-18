@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "all.h"
-#include <stdio.h>
 
 char	**read_with_hidden_files(char **files, DIR *current_dir)
 {
@@ -77,7 +76,10 @@ char	**get_specified_dir(char *dir, char *all_flags)
 
 	current_dir = opendir(dir);
 	if (current_dir == NULL)
+	{
 		print_error(dir);
+		return (NULL);
+	}
 	if (!(files = malloc(sizeof(char*) * MAX_FILES_PER_FOLDER)))
 		return (NULL);
 	files = ft_set_null(files);

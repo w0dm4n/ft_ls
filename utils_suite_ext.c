@@ -44,7 +44,7 @@ char		**set_dir_on_array(char **tmp, char **old, int index)
 			return (NULL);
 		if (S_ISDIR(file_stat->st_mode))
 		{
-			tmp[index] = old[i];
+			tmp[index] = ft_strdup(old[i]);
 			index++;
 		}
 		i++;

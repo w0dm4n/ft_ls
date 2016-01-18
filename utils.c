@@ -36,9 +36,7 @@ struct stat	*get_file_stat(char *name, struct stat *file_stat, char *folder)
 {
 	struct stat *tmp;
 	char		*full_path;
-	size_t		size;
 
-	size = (ft_strlen(folder + 1) + ft_strlen(name + 1) + 20);
 	file_stat = NULL;
 	if (!(tmp = (struct stat*)malloc(sizeof(struct stat))))
 		return (NULL);
@@ -49,8 +47,9 @@ struct stat	*get_file_stat(char *name, struct stat *file_stat, char *folder)
 	}
 	else
 	{
-		if (!(full_path = malloc(sizeof(char) * size)))
+		if (!(full_path = malloc(sizeof(char) * DEFAULT_BUFFER)))
 			return (NULL);
+		ft_bzero(full_path, DEFAULT_BUFFER);
 		full_path = ft_strcat(full_path, folder);
 		full_path = ft_strcat(full_path, "/");
 		full_path = ft_strcat(full_path, name);
@@ -85,6 +84,7 @@ char		*get_permissions(struct stat *file_stat)
 
 	if (!(p = (char*)malloc(sizeof(char*) * PERMISSIONS_BUFFER)))
 		return (NULL);
+	ft_bzero(p, PERMISSIONS_BUFFER);
 	(S_ISDIR(file_stat->st_mode)) ? (p = add_p(p, 'd')) : (p = add_p(p, '-'));
 	(file_stat->st_mode & S_IRUSR) ? (p = add_p(p, 'r')) : (p = add_p(p, '-'));
 	(file_stat->st_mode & S_IWUSR) ? (p = add_p(p, 'w')) : (p = add_p(p, '-'));

@@ -12,7 +12,7 @@
 
 #include "all.h"
 
-void		print_all_flag(char **files, char *flags, char *folder)
+void		print_all_flag(char **files, char *flags, char *folder, int only_file)
 {
 	int				i;
 	struct stat		*file_stat;
@@ -20,12 +20,15 @@ void		print_all_flag(char **files, char *flags, char *folder)
 
 	i = 0;
 	file_stat = NULL;
-	blocks_size = get_total_blocks(files, file_stat, folder);
-	if (blocks_size > 0)
+	if (!only_file)
 	{
-		ft_putstr("total ");
-		ft_putnbr(blocks_size);
-		ft_putstr("\n");
+		blocks_size = get_total_blocks(files, file_stat, folder);
+		if (blocks_size > 0 || ft_strchr(flags, 'a'))
+		{
+			ft_putstr("total ");
+			ft_putnbr(blocks_size);
+			ft_putstr("\n");
+		}
 	}
 	while (files[i])
 	{
@@ -35,6 +38,34 @@ void		print_all_flag(char **files, char *flags, char *folder)
 		free(file_stat);
 		i++;
 	}
+}
+
+void		print_file_with_flags(char **files, char *flags)
+{
+	files = modify_if_flags(flags, files);
+	if (!flags || flags == NULL || !ft_strlen(flags))
+		just_print_files(files);
+	else
+	{
+		if (ft_strchr(flags, '1'))
+		{
+			if (check_l_or_1(flags))
+				just_print_files(files);
+			else
+			{
+				if (ft_strchr(flags, 'l'))
+					print_all_flag(files, flags, ".", 1);
+			}
+		}
+		else
+		{
+			if (ft_strchr(flags, 'l'))
+				print_all_flag(files, flags, ".", 1);
+			else
+				just_print_files(files);
+		}
+	}
+	free_files(files);
 }
 
 void		print_asked_dir_with_flags(char **files, char *flags, char *folder)
@@ -50,13 +81,13 @@ void		print_asked_dir_with_flags(char **files, char *flags, char *folder)
 			else
 			{
 				if (ft_strchr(flags, 'l'))
-					print_all_flag(files, flags, folder);
+					print_all_flag(files, flags, folder, 0);
 			}
 		}
 		else
 		{
 			if (ft_strchr(flags, 'l'))
-				print_all_flag(files, flags, folder);
+				print_all_flag(files, flags, folder, 0);
 			else
 				get_current_dir(flags, folder);
 		}

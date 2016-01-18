@@ -30,6 +30,8 @@
 # define MAX_FILES_PER_FOLDER 40960
 # define PERMISSIONS_BUFFER 12
 # define ALL_DIR_AND_FILES 40960
+# define ALL_RECURSIVE_POSSIBILITY 40960
+# define DEFAULT_BUFFER 1024
 void			print_error(char *name);
 char			*add_flags(char *current_flags, char *flag_toadd);
 void			get_current_dir(char *flags, char *folder);
@@ -47,7 +49,7 @@ size_t			get_total_blocks(char **files, struct stat *file_stat, char *folder);
 void			print_line(struct stat *file_stat, char *flags, char **f, int i);
 int				*initialise_array(int *array);
 int				check_l_or_1(char *flags);
-char			**range_byfilenfolder(char **file_n_folder);
+char			**range_byfilenfolder(char **file_n_folder, int folder);
 char			**set_dir_on_array(char **tmp, char **old, int index);
 int				get_file_nbr(char **file_n_folder);
 void			print_asked_dir_with_flags(char **files, char *flags, char *folder);
@@ -56,4 +58,7 @@ char			**reverse_array(char **files);
 char			**read_without_hidden_files(char **files, DIR *current_dir);
 char			**read_with_hidden_files(char **files, DIR *current_dir);
 void			free_files(char **files);
+char			**modify_if_flags(char *flags, char **files);
+void			print_file_with_flags(char **files, char *flags);
+void			print_recursive(char **files, char *flags, char *folder);
 #endif
