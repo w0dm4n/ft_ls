@@ -42,7 +42,7 @@ struct stat	*get_file_stat(char *name, struct stat *file_stat, char *folder)
 		return (NULL);
 	if (!ft_strcmp(folder, "."))
 	{
-		if (stat(name, tmp) < 0)
+		if (lstat(name, tmp) < 0)
 			return (NULL);
 	}
 	else
@@ -53,7 +53,7 @@ struct stat	*get_file_stat(char *name, struct stat *file_stat, char *folder)
 		full_path = ft_strcat(full_path, folder);
 		full_path = ft_strcat(full_path, "/");
 		full_path = ft_strcat(full_path, name);
-		if (stat(full_path, tmp) < 0)
+		if (lstat(full_path, tmp) < 0)
 			return (NULL);
 		free(full_path);
 	}
