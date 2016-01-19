@@ -88,7 +88,6 @@ size_t		get_total_blocks(char **files, struct stat *file_stat, char *folder)
 	int		i;
 	size_t	size;
 
-	// READING 2 TIMES IS USELESS AND BAD
 	i = 0;
 	size = 0;
 	while (files[i])

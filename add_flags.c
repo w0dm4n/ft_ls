@@ -38,7 +38,7 @@ int		new_flags(char *current_flags, char *flag_toadd)
 	return ((new) ? 1 : 0);
 }
 
-int		flag_notpresent(char *current_flags, char flag)
+/*int		flag_notpresent(char *current_flags, char flag)
 {
 	int i;
 	int result;
@@ -55,7 +55,7 @@ int		flag_notpresent(char *current_flags, char flag)
 		i++;
 	}
 	return ((result) ? 0 : 1);
-}
+}*/
 
 char	*add_new_flags(char *current_flags, char *flag_toadd)
 {
@@ -71,10 +71,7 @@ char	*add_new_flags(char *current_flags, char *flag_toadd)
 		if (ft_strchr(current_flags, flag_toadd[i]) == NULL)
 		{
 			if (check_ifvalid(flag_toadd[i]))
-			{
-				if (flag_notpresent(new, flag_toadd[i]))
 					new = ft_charcat(new, flag_toadd[i]);
-			}
 			else
 			{
 				print_error_usage(flag_toadd[i]);

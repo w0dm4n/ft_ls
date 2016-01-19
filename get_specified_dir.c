@@ -51,6 +51,8 @@ char	**reverse_array(char **files)
 	int		i;
 	int		i_new;
 
+	if (!files || !files[0])
+		return (NULL);
 	i = 0;
 	i_new = 0;
 	if (!(new = malloc(sizeof(char*) * MAX_FILES_PER_FOLDER)))
@@ -88,7 +90,8 @@ char	**get_specified_dir(char *dir, char *all_flags)
 	else
 		files = read_without_hidden_files(files, current_dir);
 	files = range_byascii(files);
-	// if flags t <=> order by file date modification files = ..
+	if (ft_strchr(all_flags, 't'))
+		files = range_by_t_flags(files, dir);
 	if (ft_strchr(all_flags, 'r'))
 		files = reverse_array(files);
 	closedir(current_dir);

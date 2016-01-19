@@ -42,7 +42,7 @@ void		print_current_dir_with_flags(char **files, char *flags)
 	if (ft_strchr(flags, '1'))
 	{
 		if (check_l_or_1(flags))
-			get_current_dir(flags, ".");
+			just_print_files(files);
 		else
 		{
 			if (ft_strchr(flags, 'l'))
@@ -54,7 +54,7 @@ void		print_current_dir_with_flags(char **files, char *flags)
 		if (ft_strchr(flags, 'l'))
 			print_all_l_flag(files, flags);
 		else
-			get_current_dir(flags, ".");			
+			just_print_files(files);			
 	}
 	free_files(files);
 }
@@ -122,8 +122,10 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 				ft_putstr(file_n_folder[i]);
 				ft_putstr(":\n");
 			}
-			//ADD PRINT RECURSIVE if -R
-			print_asked_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags, file_n_folder[i]);
+			if (ft_strchr(flags, 'R'))
+				print_recursive(get_specified_dir(file_n_folder[i], flags), flags, file_n_folder[i]);
+			else
+				print_asked_dir_with_flags(get_specified_dir(file_n_folder[i], flags), flags, file_n_folder[i]);
 			if (array_len > 1 && file_n_folder[i + 1])
 				ft_putstr("\n");
 		}

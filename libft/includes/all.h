@@ -58,7 +58,10 @@ char			**reverse_array(char **files);
 char			**read_without_hidden_files(char **files, DIR *current_dir);
 char			**read_with_hidden_files(char **files, DIR *current_dir);
 void			free_files(char **files);
-char			**modify_if_flags(char *flags, char **files);
+char			**modify_if_flags(char *flags, char **files, char *folder);
 void			print_file_with_flags(char **files, char *flags);
 void			print_recursive(char **files, char *flags, char *folder);
+void			print_current_dir_with_flags(char **files, char *flags);
+char			**range_by_t_flags(char **files, char *folder);
+int				*reverse_int_array(int *array);
 #endif

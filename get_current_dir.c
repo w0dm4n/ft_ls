@@ -77,11 +77,12 @@ void	print_current_dir(char **files)
 	}
 }
 
-char	**modify_if_flags(char *flags, char **files)
+char	**modify_if_flags(char *flags, char **files, char *folder)
 {
 	if (ft_strchr(flags, 'r'))
 		files = reverse_array(files);
-	// if flags t <=> order by file date modification files = ..
+	if (ft_strchr(flags, 't'))
+		files = range_by_t_flags(files, folder);
 	return (files);
 }
 
@@ -107,7 +108,7 @@ void	get_current_dir(char *flags, char *folder)
 		files = read_without_hidden_files(files, current_dir);
 	closedir(current_dir);
 	files = range_byascii(files);
-	files = modify_if_flags(flags, files);
+	files = modify_if_flags(flags, files, folder);
 	print_current_dir(files);
 	free_files(files);
 }

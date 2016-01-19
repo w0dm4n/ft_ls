@@ -59,7 +59,6 @@ void		just_print_files(char **files)
 	int		i;
 
 	i = 0;
-	// SEGV WITH ./ft_ls test dir
 	while (files[i])
 	{
 		ft_putstr(files[i]);
@@ -79,4 +78,32 @@ void		free_files(char **files)
 			free(files[i]);
 		i++;
 	}
+}
+
+struct stat *get_file_lstat(char *name, struct stat *file_stat, char *folder)
+{
+	struct stat *tmp;
+	char		*full_path;
+
+	file_stat = NULL;
+	if (!(tmp = (struct stat*)malloc(sizeof(struct stat))))
+		return (NULL);
+	if (!ft_strcmp(folder, "."))
+	{
+		if (lstat(name, tmp) < 0)
+			return (NULL);
+	}
+	else
+	{
+		if (!(full_path = malloc(sizeof(char) * DEFAULT_BUFFER)))
+			return (NULL);
+		ft_bzero(full_path, DEFAULT_BUFFER);
+		full_path = ft_strcat(full_path, folder);
+		full_path = ft_strcat(full_path, "/");
+		full_path = ft_strcat(full_path, name);
+		if (lstat(full_path, tmp) < 0)
+			return (NULL);
+		free(full_path);
+	}
+	return (tmp);
 }

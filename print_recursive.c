@@ -49,6 +49,38 @@ void		recursive_if(char **path, char *folder, char *flags)
 	free(real_path);
 }
 
+void		print_by_flags(struct stat *f_stat, char *flags, char **f, int i)
+{
+	if (!ft_strcmp(flags, "R"))
+	{
+		ft_putstr(f[i]);
+		ft_putstr("\n");
+	}
+	else if (ft_strchr(flags, '1'))
+	{
+		if (check_l_or_1(flags))
+		{
+			ft_putstr(f[i]);
+			ft_putstr("\n");
+		}
+		else
+		{
+			if (ft_strchr(flags, 'l'))
+				print_line(f_stat, flags, f, i);
+		}
+	}
+	else
+	{
+		if (ft_strchr(flags, 'l'))
+			print_line(f_stat, flags, f, i);
+		else
+		{
+			ft_putstr(f[i]);
+			ft_putstr("\n");
+		}
+	}
+}
+
 void		print_recursive(char **files, char *flags, char *folder)
 {
 	char			**path;
@@ -67,8 +99,7 @@ void		print_recursive(char **files, char *flags, char *folder)
 	{
 		if (!(file_stat = get_file_stat(files[i], file_stat, folder)))
 			return ;
-		//FLAGS
-		print_line(file_stat, flags, files, i);
+		print_by_flags(file_stat, flags, files, i);
 		if (S_ISDIR(file_stat->st_mode) && files[i][0] != '.')
 		{
 			path = new_dir(path, files[i]);
@@ -77,6 +108,7 @@ void		print_recursive(char **files, char *flags, char *folder)
 		free(file_stat);
 		i++;
 	}
+	ft_putstr("\n");
 	free_files(files);
 	if (boolean)
 		recursive_if(path, folder, flags);

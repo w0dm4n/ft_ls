@@ -42,7 +42,7 @@ void		print_all_flag(char **files, char *flags, char *folder, int only_file)
 
 void		print_file_with_flags(char **files, char *flags)
 {
-	files = modify_if_flags(flags, files);
+	files = modify_if_flags(flags, files, ".");
 	if (!flags || flags == NULL || !ft_strlen(flags))
 		just_print_files(files);
 	else
@@ -77,7 +77,7 @@ void		print_asked_dir_with_flags(char **files, char *flags, char *folder)
 		if (ft_strchr(flags, '1'))
 		{
 			if (check_l_or_1(flags))
-				get_current_dir(flags, folder);
+				just_print_files(files);
 			else
 			{
 				if (ft_strchr(flags, 'l'))
@@ -89,7 +89,7 @@ void		print_asked_dir_with_flags(char **files, char *flags, char *folder)
 			if (ft_strchr(flags, 'l'))
 				print_all_flag(files, flags, folder, 0);
 			else
-				get_current_dir(flags, folder);
+				just_print_files(files);;
 		}
 	}
 	free_files(files);
