@@ -23,7 +23,7 @@ void		print_all_flag(char **files, char *flags, char *folder, int only_file)
 	if (!only_file)
 	{
 		blocks_size = get_total_blocks(files, file_stat, folder);
-		if (blocks_size > 0 || ft_strchr(flags, 'a'))
+		if (blocks_size > 0 || ft_strchr(flags, 'a') || files[0])
 		{
 			ft_putstr("total ");
 			ft_putnbr(blocks_size);

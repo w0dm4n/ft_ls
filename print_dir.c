@@ -21,7 +21,7 @@ void		print_all_l_flag(char **files, char *flags)
 	i = 0;
 	file_stat = NULL;
 	blocks_size = get_total_blocks(files, file_stat, ".");
-	if (blocks_size > 0 || ft_strchr(flags, 'a'))
+	if (blocks_size > 0 || ft_strchr(flags, 'a') || files[0])
 	{
 		ft_putstr("total ");
 		ft_putnbr(blocks_size);
@@ -91,8 +91,6 @@ void		print_file_or_dir(char *flags, char **av, int *pos)
 		file_n_folder[i] = av[pos[i]];
 		i++;
 	}
-	// range them by ascii order [file_n_folder]
-
 	i = 0;
 	array_len = 0;
 	all_file = range_byfilenfolder(file_n_folder, 0);

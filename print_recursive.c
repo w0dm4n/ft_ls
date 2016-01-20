@@ -12,6 +12,25 @@
 
 #include "all.h"
 
+void		print_total(char **files, char *flags, char *folder)
+{
+	int				blocks_size;
+	struct stat*	file_stat;
+
+	blocks_size = 0;
+	file_stat = NULL;
+	if (ft_strchr(flags, 'l'))
+	{
+		blocks_size = get_total_blocks(files, file_stat, folder);
+		if (blocks_size > 0 || ft_strchr(flags, 'a') || files[0])
+		{
+			ft_putstr("total ");
+			ft_putnbr(blocks_size);
+			ft_putstr("\n");
+		}
+	}
+}
+
 char		**new_dir(char **path, char *toadd)
 {
 	int		i;
@@ -95,6 +114,7 @@ void		print_recursive(char **files, char *flags, char *folder)
 	if (!(path = malloc(sizeof(char*) * ALL_RECURSIVE_POSSIBILITY)))
 		return ;
 	path = ft_set_null(path);
+	print_total(files, flags, folder);
 	while (files[i])
 	{
 		if (!(file_stat = get_file_stat(files[i], file_stat, folder)))
