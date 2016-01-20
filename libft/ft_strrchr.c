@@ -14,11 +14,9 @@
 
 char	*ft_strrchr(const char *string, int c)
 {
-	int				i;
 	unsigned char	*tmp;
 	unsigned char	*iter;
 
-	i = 0;
 	tmp = (unsigned char*)string;
 	iter = NULL;
 	while (*tmp)

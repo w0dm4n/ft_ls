@@ -18,14 +18,12 @@ static char		*replace_occur(int place, char *tor, size_t size, char *tos)
 	char	*tmp;
 	size_t	i;
 	size_t	i_2;
-	size_t	size_toset;
 
 	i = 0;
 	i_2 = 0;
 	place = place - (ft_strlen(tos) - 1);
 	size = place + (ft_strlen(tos));
 	tmp = malloc(sizeof(char*) * ft_strlen(tor));
-	size_toset = ft_strlen(tos);
 	while (tor[i])
 	{
 		if (i >= (size_t)(place) && i < (size))
