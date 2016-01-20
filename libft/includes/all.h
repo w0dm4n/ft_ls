@@ -64,4 +64,6 @@ void			print_recursive(char **files, char *flags, char *folder);
 void			print_current_dir_with_flags(char **files, char *flags);
 char			**range_by_t_flags(char **files, char *folder);
 int				*reverse_int_array(int *array);
+char			*add_p(char *permissions, char to_add);
+char			*get_state(char *p, struct stat *file_stat);
 #endif

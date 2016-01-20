@@ -85,21 +85,6 @@ char		*get_permissions(struct stat *file_stat)
 	if (!(p = (char*)malloc(sizeof(char*) * PERMISSIONS_BUFFER)))
 		return (NULL);
 	ft_bzero(p, PERMISSIONS_BUFFER);
-	//(S_ISDIR(file_stat->st_mode)) ? (p = add_p(p, 'd')) : (p = add_p(p, '-'));
-	if (S_ISDIR(file_stat->st_mode))
-		p = add_p(p, 'd');
-	else if (S_ISLNK(file_stat->st_mode))
-		p = add_p(p, 'l');
-	else
-		p = add_p(p, '-');
-	(file_stat->st_mode & S_IRUSR) ? (p = add_p(p, 'r')) : (p = add_p(p, '-'));
-	(file_stat->st_mode & S_IWUSR) ? (p = add_p(p, 'w')) : (p = add_p(p, '-'));
-	(file_stat->st_mode & S_IXUSR) ? (p = add_p(p, 'x')) : (p = add_p(p, '-'));
-	(file_stat->st_mode & S_IRGRP) ? (p = add_p(p, 'r')) : (p = add_p(p, '-'));
-	(file_stat->st_mode & S_IWGRP) ? (p = add_p(p, 'w')) : (p = add_p(p, '-'));
-	(file_stat->st_mode & S_IXGRP) ? (p = add_p(p, 'x')) : (p = add_p(p, '-'));
-	(file_stat->st_mode & S_IROTH) ? (p = add_p(p, 'r')) : (p = add_p(p, '-'));
-	(file_stat->st_mode & S_IWOTH) ? (p = add_p(p, 'w')) : (p = add_p(p, '-'));
-	(file_stat->st_mode & S_IXOTH) ? (p = add_p(p, 'x')) : (p = add_p(p, '-'));
+	p = get_state(p, file_stat);
 	return (p);
 }
