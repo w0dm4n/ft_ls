@@ -12,15 +12,11 @@
 
 #include "all.h"
 
-char	**get_in_order(int *t, char **files)
+char	**get_in_order(int *t, char **files, int i, int final_size)
 {
-	int		final_size;
-	int		i;
 	int		tmp_value;
 	char	*tmp;
 
-	final_size = 0;
-	i = 0;
 	if (!t || !t[0])
 		return (NULL);
 	while (t[final_size])
@@ -44,10 +40,9 @@ char	**get_in_order(int *t, char **files)
 	return (files);
 }
 
-
 char	**set_in_t_order(char **files, int *t)
 {
-	files = get_in_order(t, files);
+	files = get_in_order(t, files, 0, 0);
 	return (files);
 }
 
@@ -55,7 +50,7 @@ int		*get_timestamp(char **files, char *folder)
 {
 	int				*tmp;
 	int				i;
-	struct stat* 	file_stat;
+	struct stat		*file_stat;
 
 	i = 0;
 	while (files[i])

@@ -33,3 +33,40 @@ int		*reverse_int_array(int *array)
 	}
 	return (tmp);
 }
+
+void	print_with_nl(char *to_print, char *flags)
+{
+	if (ft_strchr(flags, 'G'))
+	{
+		if (!print_name_by_extension(to_print))
+			ft_putstr(to_print);
+	}
+	else
+		ft_putstr(to_print);
+	ft_putstr("\n");
+}
+
+char	*get_file_extension(char *file)
+{
+	char	*extension;
+	int		i;
+	int		extension_size;
+	int		i_2;
+
+	i_2 = 0;
+	i = ft_strlen(file);
+	while (file[i] != '.')
+		i--;
+	extension_size = (ft_strlen(file) - i);
+	if (!(extension = malloc(sizeof(char) * extension_size)))
+		return (NULL);
+	i++;
+	while (file[i])
+	{
+		extension[i_2] = file[i];
+		i_2++;
+		i++;
+	}
+	extension[i_2] = '\0';
+	return (extension);
+}

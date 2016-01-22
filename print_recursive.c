@@ -15,11 +15,11 @@
 void		print_total(char **files, char *flags, char *folder)
 {
 	int				blocks_size;
-	struct stat*	file_stat;
+	struct stat		*file_stat;
 
 	blocks_size = 0;
 	file_stat = NULL;
-	if (ft_strchr(flags, 'l'))
+	if (!check_l_or_1(flags))
 	{
 		blocks_size = get_total_blocks(files, file_stat, folder);
 		if (blocks_size > 0 || ft_strchr(flags, 'a') || files[0])
@@ -44,37 +44,35 @@ char		**new_dir(char **path, char *toadd)
 
 void		recursive_if(char **path, char *folder, char *flags)
 {
-	int 			i;
-	char			*real_path;
+	int				i;
+	char			*rl;
 	struct stat		*file_stat;
 
 	i = 0;
-	real_path = ft_strnew(DEFAULT_BUFFER);
+	rl = ft_strnew(DEFAULT_BUFFER);
 	while (path[i])
 	{
-		ft_bzero(real_path, DEFAULT_BUFFER);
-		real_path = realpath(folder, real_path);
-		real_path = ft_strcat(real_path, "/");
-		real_path = ft_strcat(real_path, path[i]);
-		real_path = ft_strcat(real_path, "/");
+		ft_bzero(rl, DEFAULT_BUFFER);
+		rl = realpath(folder, rl);
+		rl = ft_strcat(rl, "/");
+		rl = ft_strcat(rl, path[i]);
+		rl = ft_strcat(rl, "/");
 		if (!(file_stat = get_file_stat(path[i], file_stat, folder)))
 			return ;
-		ft_putstr(real_path);
+		ft_putstr(rl);
 		ft_putstr(":\n");
-		print_recursive(get_specified_dir(real_path, flags), flags, real_path);
+		print_recursive(get_specified_dir(rl, flags), flags, rl, 0);
 		free(file_stat);
 		i++;
 	}
-	free(real_path);
+	free(rl);
+	free_files(path);
 }
 
 void		print_by_flags(struct stat *f_stat, char *flags, char **f, int i)
 {
 	if (!ft_strcmp(flags, "R"))
-	{
-		ft_putstr(f[i]);
-		ft_putstr("\n");
-	}
+		print_with_nl(f[i], flags);
 	else if (ft_strchr(flags, '1'))
 	{
 		if (check_l_or_1(flags))
@@ -84,32 +82,29 @@ void		print_by_flags(struct stat *f_stat, char *flags, char **f, int i)
 		}
 		else
 		{
-			if (ft_strchr(flags, 'l'))
+			if (ft_strchr(flags, 'l') || ft_strchr(flags, 'g')
+				|| ft_strchr(flags, 'o'))
 				print_line(f_stat, flags, f, i);
 		}
 	}
 	else
 	{
-		if (ft_strchr(flags, 'l'))
+		if (ft_strchr(flags, 'l') || ft_strchr(flags, 'g')
+			|| ft_strchr(flags, 'o'))
 			print_line(f_stat, flags, f, i);
 		else
-		{
-			ft_putstr(f[i]);
-			ft_putstr("\n");
-		}
+			print_with_nl(f[i], flags);
 	}
 }
 
-void		print_recursive(char **files, char *flags, char *folder)
+void		print_recursive(char **files, char *flags, char *folder, int i)
 {
 	char			**path;
-	int				i;
 	struct stat		*file_stat;
 	int				boolean;
 
 	if (!files || !files[0] || !ft_strlen(files[0]))
 		return ;
-	i = 0;
 	boolean = 0;
 	if (!(path = malloc(sizeof(char*) * ALL_RECURSIVE_POSSIBILITY)))
 		return ;
@@ -120,17 +115,12 @@ void		print_recursive(char **files, char *flags, char *folder)
 		if (!(file_stat = get_file_stat(files[i], file_stat, folder)))
 			return ;
 		print_by_flags(file_stat, flags, files, i);
-		if (S_ISDIR(file_stat->st_mode) && files[i][0] != '.')
-		{
+		if (S_ISDIR(file_stat->st_mode) && files[i][0] != '.' && (boolean += 1))
 			path = new_dir(path, files[i]);
-			boolean++;
-		}
 		free(file_stat);
 		i++;
 	}
 	ft_putstr("\n");
 	free_files(files);
-	if (boolean)
-		recursive_if(path, folder, flags);
-	free_files(path);
+	(boolean) ? recursive_if(path, folder, flags) : free_files(path);
 }

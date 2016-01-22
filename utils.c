@@ -22,7 +22,7 @@ char		*get_group(struct stat *file_stat)
 	return (gr->gr_name);
 }
 
-char 		*get_user(struct stat *file_stat)
+char		*get_user(struct stat *file_stat)
 {
 	struct passwd *tmp;
 

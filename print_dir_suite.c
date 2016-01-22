@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnequ.c                                       :+:      :+:    :+:   */
+/*   print_dir_suite.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmarinh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/27 00:33:38 by frmarinh          #+#    #+#             */
-/*   Updated: 2016/01/21 01:47:01 by frmarinh         ###   ########.fr       */
+/*   Created: 2016/01/20 23:35:48 by frmarinh          #+#    #+#             */
+/*   Updated: 2016/01/20 23:36:42 by frmarinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "all.h"
 
-int		ft_strnequ(char const *s1, char const *s2, size_t n)
+void	print_arg_2(int *i, char *f, char **fd, char **all_file)
 {
-	int i;
-	int boolean;
+	int				file_nbr;
 
-	if (!s1 || !s2)
-		return (0);
-	i = 0;
-	boolean = 0;
-	if (s1 && s2)
+	file_nbr = get_file_nbr(fd);
+	while (fd[i[0]])
 	{
-		while (i < (int)n && s1[i] == s2[i])
-			i++;
-		if (i >= (int)n ||
-			(i >= (int)ft_strlen(s1) && i >= (int)ft_strlen(s2)))
-			boolean = 1;
+		if (i[0] < file_nbr)
+		{
+			if (!i[1])
+			{
+				print_file_with_flags(all_file, f);
+				i[1]++;
+			}
+			if ((i[0] + 1) == file_nbr && fd[i[0] + 1])
+				ft_putstr("\n");
+		}
+		else
+			print_arg(i, f, fd);
+		i[0]++;
 	}
-	return (boolean);
 }

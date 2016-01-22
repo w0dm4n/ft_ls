@@ -27,7 +27,6 @@ char		**range_byfilenfolder(char **file_n_folder, int folder)
 	tmp = ft_set_null(tmp);
 	while (file_n_folder[i])
 	{
-
 		if (!(file_stat = get_file_stat(file_n_folder[i], file_stat, ".")))
 			return (NULL);
 		if (!S_ISDIR(file_stat->st_mode))
@@ -38,9 +37,7 @@ char		**range_byfilenfolder(char **file_n_folder, int folder)
 		i++;
 		free(file_stat);
 	}
-	if (folder)
-		tmp = set_dir_on_array(tmp, file_n_folder, i_new);
-	return (tmp);
+	return ((folder) ? tmp = set_dir_on_array(tmp, file_n_folder, i_new) : tmp);
 }
 
 int			check_l_or_1(char *flags)
@@ -103,28 +100,17 @@ size_t		get_total_blocks(char **files, struct stat *file_stat, char *folder)
 
 char		*get_last_modification_time(struct stat *file_stat)
 {
-	struct tm		*time_file;
-	char			*month;
-	char			*final_date;
-	char			*rest;
+	char	*tmp;
+	char	*final_date;
 
 	if (file_stat)
 	{
-		if (!(time_file = (struct tm*)malloc(sizeof(struct tm))))
-			return (NULL);
-		if (!(month = ft_strnew(20)))
+		if (!(tmp = ft_strnew(50)))
 			return (NULL);
 		if (!(final_date = ft_strnew(50)))
 			return (NULL);
-		if (!(rest = ft_strnew(20)))
-		return (NULL);
-		time_file = localtime(&file_stat->st_mtime);
-		strftime(month, sizeof(char*), "%B", time_file);
-		strftime(rest, sizeof(char*), "%d %H:%M", time_file);
-		month = ft_strsub(month, 0, 3);
-		final_date = ft_strcat(final_date, month);
-		final_date = ft_strcat(final_date, " ");
-		final_date = ft_strcat(final_date, rest);
+		tmp = ctime(&file_stat->st_mtime);
+		final_date = ft_strcat(final_date, ft_strsub(tmp, 4, 12));
 		return (final_date);
 	}
 	return (NULL);

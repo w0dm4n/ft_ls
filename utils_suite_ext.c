@@ -54,14 +54,27 @@ char		**set_dir_on_array(char **tmp, char **old, int index)
 	return (tmp);
 }
 
-void		just_print_files(char **files)
+void		just_print_files(char **files, char *flags, char *folder)
 {
-	int		i;
+	struct stat	*f_t;
+	int			i;
 
+	if (!files || !files[0] || !ft_strlen(files[0]))
+		return ;
 	i = 0;
 	while (files[i])
 	{
-		ft_putstr(files[i]);
+		if (ft_strchr(flags, 'G'))
+		{
+			if (!(f_t = get_file_stat(files[i], f_t, folder)))
+				return ;
+			if (!print_name_by_extension(files[i]))
+				if (!print_name_by_permissions(get_permissions(f_t), files[i]))
+					ft_putstr(files[i]);
+			free(f_t);
+		}
+		else
+			ft_putstr(files[i]);
 		ft_putstr("\n");
 		i++;
 	}
@@ -71,6 +84,8 @@ void		free_files(char **files)
 {
 	int	i;
 
+	if (!files || !files[0] || !ft_strlen(files[0]))
+		return ;
 	i = 0;
 	while (files[i])
 	{
@@ -80,7 +95,7 @@ void		free_files(char **files)
 	}
 }
 
-struct stat *get_file_lstat(char *name, struct stat *file_stat, char *folder)
+struct stat	*get_file_lstat(char *name, struct stat *file_stat, char *folder)
 {
 	struct stat *tmp;
 	char		*full_path;
